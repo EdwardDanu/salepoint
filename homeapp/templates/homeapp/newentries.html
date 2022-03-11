@@ -1,0 +1,67 @@
+{% extends "homeapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="tempclass"></div>
+<div class="container-fluid"><div class="row"><h6 class="advance">Register<h6></div></div>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <form class="reg_form" action="{% url 'newentry' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+       <div class="form-group"><div class="row register">
+           <div class="col-md-3 col-xs-11"></div>
+           <div class="col-md-6 col-xs-11">
+            <div class="form-group">
+              <label for="brandsection">Brandsection</label>
+              <select name="brandsection" class="form-control" id="brandsection">
+                  <option value="perfumes">Perfumes</option>
+                  <option value="clothing">Clothing</option>
+                  <option value="footwear">Footwear</option>
+                  <option value="hair">Hair</option>
+              </select>
+              <label for="brand">Brand</label>
+              <select name="brand" class="form-control selectedbrand" id="perfumes">
+                <option value="Perfumes">Body Sprays</option><option value="Clothing">Deodorants</option>
+                <option value="Footwear">Oils</option><option value="Hair">Roll ons</option>
+              </select>
+              <select name="brand" class="form-control selectedbrand" id="clothing" hidden>
+                <option value="Perfumes">Kids Clothes</option><option value="Clothing">Sports Wear</option>
+                <option value="Footwear">Dresses and Jumpsuits</option><option value="Hair">Formal </option>
+              </select>
+              <select name="brand" class="form-control selectedbrand" id="footwear" hidden>
+                <option value="Perfumes">Sneakers</option><option value="Clothing">Formal Wear</option>
+                <option value="Footwear">Slops</option><option value="Hair">Sport</option>
+              </select>
+              <select name="brand" class="form-control selectedbrand" id="hair" hidden>
+                <option value="Perfumes">Brazilian</option><option value="Clothing">Peruvian</option>
+                <option value="Footwear">Indian</option><option value="Hair">Italian</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="trending">Trending:</label>
+              <input class="form-control" type="text" name="trending" placeholder="Trending">
+            </div>
+            <div class="form-group">
+              <label for="price">Price:</label>
+              <input class="form-control" type="text" name="price" placeholder="Item Price">
+            </div>
+            <div class="form-group">
+              <label for="color">Color:</label>
+              <input class="form-control" type="text" name="color" placeholder="Color">
+            </div>
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <input class="form-control" type="text" name="description" placeholder="Description">
+            </div>
+              <div class="imageform">
+                 <label for='files' class="addimage" id="formset"> <i class="fas fa-camera"></i>Add an image</label>
+                 <input id="files" multiple="True" type="file" class="custom-file" name="images" hidden>
+              </div>
+             <input class="submitform" type="submit" value="Submit"></div>
+           <div class="col-md-3 col-xs-11"><output id='result'></output></div> 
+        </div></div>
+    </form>   
+{% endblock %}
+{% block script %}
+    <script src="{% static 'homeapp/newentries.js' %}"></script>
+{% endblock %}

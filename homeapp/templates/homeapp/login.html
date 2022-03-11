@@ -1,0 +1,12 @@
+{% extends "homeapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container-fluid border"><div class="row"><h6 class="advance">log in<h6></div></div>
+<form class="reg_form" action="{% url 'login' %}" method="post">
+  {% csrf_token %}
+  <div class="form-group"><div class="row register"><div class="col-8">{{form}}</div></div></div>
+  <div class="form-group"><div class="row register"><div class="col-8">
+  <input class="btn btn-success" type="submit" value="Submit"></div></div></div>
+</form>
+Not signed up for orders ?, please. <a href="{% url 'register' %}">Sign up.</a>
+{% endblock %}

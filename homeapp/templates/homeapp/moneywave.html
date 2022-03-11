@@ -1,0 +1,56 @@
+{% extends "homeapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container-fluid border"><div class="row"><h6 class="advance">Moneywave<h6></div></div>
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+  <div id="name" hidden>{{name}}</div>
+  <div id="reference"  hidden>{{reference}}</div> 
+  <div id="sfirstnamed" hidden>{{sfirstname}}</div>
+  <div id="slastnamed"  hidden>{{slastname}}</div>  
+  <div id="scurrencyd"  hidden>{{scurrency}}</div> 
+  <div id="samountd"    hidden>{{samount}}</div>    
+  <div id="rfirstnamed" hidden>{{rfirstname}}</div> 
+  <div id="rlastnamed"  hidden>{{rlastname}}</div>  
+  <div id="rcurrencyd"  hidden>{{rcurrency}}</div>  
+  <div id="ramountd"    hidden >{{ramount}}</div> 
+  <div id="vcurrencyd"  hidden>{{vcurrency}}</div>  
+  <div id="vamountd"    hidden >{{vamount}}</div>   
+    <form action="{% url 'moneywave' name %}" method="post">
+      {% csrf_token %}
+      <div class="container-fluid">
+        <div class="row register">
+          <div class="col-md-8 col-xs-12">
+            <div class="row registerb">
+              {{forms}}
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="form-group">
+          <div class="row register">
+            <div class="col-md-8 col-xs-12">
+                <input class="form-control btn btn-outline-success textformb" type="submit" value="Submit Application">
+              </div>
+            </div>
+          </div>
+        </div> 
+    </form>
+    <div class="container-fluid">
+      <div class="row register">
+        <div class="col-md-8 col-xs-12">
+            <ul>
+              {% for list in pending %}
+              <li><a href="{% url 'moneywave' list.reference %}">
+                {{list.vcurrency}} {{list.vamount}} variance on  {{list.sfirstname}} {{list.slastname}} 
+                transfer to {{list.rfirstname}} {{list.rlastname}}</a></li>
+              {% endfor %} 
+            </ul>
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'homeapp/moneywave.js' %}"></script>
+{% endblock %}

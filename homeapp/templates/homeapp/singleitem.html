@@ -1,0 +1,65 @@
+{% extends "homeapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container-fluid border">
+      <div class="row">
+          <h6 class="advance">Active Item<h6>
+      </div>
+</div>
+<br>
+<div class="buy-container">
+    <div class="img-toggler-sidebar">
+          {% for image in photos %}
+                <img src ="{{image.images.url}}" class="img-toggler" id="{{image.id}}">
+          {% endfor %}
+    </div>
+    <div class="main-image-section">
+          <div id="main-image-div" class="main-image-div">
+            <img src ="{{mainphoto.images.url}}" class="main-image" id="{{image.id}}">
+          </div>
+          <div class="main-image-description">
+              <h4>{{entry.brand}}
+              <h4>{{entry.memory}}, {{entry.network}}, {{entry.color}}</h4>
+              <h4>International Version</h4>
+              <h6>by <a href="">Apple</a></h6>
+              <p>chatboard<a href=""> 269 questions answered</a></p>
+              <hr class="my-2 br_class">
+              <b style="color: brown; font-size: larger;">USD {{price.price}}.00</b><br>
+              <b>Condition</b> : {{entry.condition}}<br>
+              <b>Usage</b> : {{entry.usage}} <hr class="my-2 br_class">
+              {% for line in description %}
+              <li class="main_desc">{{line}}</li> <br>
+              {% endfor %}
+            </div>
+            <div class="main-image-cart form-group">
+              <b style="color: brown; font-size: larger;">AED {{price.price}}.00</b> <br>
+              <b>Date listed</b>: 02 SEP 20<br>
+              <div style="color: green; font-size: 20px; font-weight: 200;">Only one item listed</div> 
+              <b><a href="">Call</a> {{entry.contact}}</b>
+              <hr class="my-2 br_class"><b>Location</b> : <a href="">{{entry.location}}</a><hr class="my-4">
+              <form id="buyformid" action="{% url 'buy' name id %}" method="post">
+              {% csrf_token %}
+              <input type="button" id="addcart"class=" form-control btn btn-success cart_button buythephone" value="Add to cart"> <br>
+              <input type="button" id="ordernow"class=" form-control btn btn-warning cart_button buythephone" value="Order Now">
+              <input type="button" id="watchlist" class=" form-control btn btn-primary cart_button buythephone" value="Add to watchlist">
+              <input id="anyname" type="text" name="anyname" value="anyvalue" hidden>
+              <div id="selectedphone" hidden>{{name}}</div>
+              <div id="selectedid" hidden>{{id}}</div>
+              <div id="cartlistcount" hidden>{{cartlistcount}}</div>
+              <b>Add a Protection Plan:</b> <br>
+              <input type="checkbox"> 1-Year Extended Warranty
+                for AED 250.00 <br>
+              <input type="checkbox">1-Year Damage Protection
+                for AED 350.00 <br>
+              <input type="checkbox">1-Year Extended Warranty + 2 Years Damage Protection
+                for AED 400.00
+              <hr class="my-4">
+                pin your location
+              </form>
+            </div>
+    </div>
+</div> 
+{% endblock %}   
+{% block script %}
+  <script src="{% static 'homeapp/singleitem.js'%}"></script>
+{% endblock %}

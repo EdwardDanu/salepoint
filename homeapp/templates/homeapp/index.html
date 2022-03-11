@@ -1,0 +1,99 @@
+{% extends "homeapp/layout.html" %}
+{% load static %}
+{% block body %}
+<!--first container slides -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+        <ul class="carousel-indicators">
+               <li data-target="#slides" data-slide-to="0"class="active"></li>
+               <li data-target="#slides" data-slide-to="1"></li>
+               <li data-target="#slides" data-slide-to="2"></li>
+        </ul>
+        <div class="carousel-inner carousel-inner-head">
+                <div class="carousel-item carousel-item-head active">
+                        <div class=" carousel-caption carousel-caption-head">
+                               <h3>Eddmoak Fashions</h3>
+                               <a href="">
+                                     <button type="button" class="btn btn-outline-light btn-lg">Smart Always</button>
+                               </a>
+                        </div>
+                        <img src = "{% static 'homeapp/images/final2.png'%}">  
+                </div>
+                <div class="carousel-item carousel-item-head">
+                        <div class="carousel-caption carousel-caption-head">
+                                <h3>Eddmoak Fashions</h3>
+                                <a href="#">
+                                      <button type="button" class="btn btn-outline-light btn-lg">Smart Always</button>
+                                </a>
+                        </div>
+                        <img src = "{% static 'homeapp/images/final2.png'%}">  
+                </div>
+                <div class="carousel-item carousel-item-head">
+                        <div class=" carousel-caption carousel-caption-head">
+                                <h3>Eddmoak Fashions</h3>
+                                <a href="#">
+                                        <button type="button" class="btn btn-outline-light btn-lg">Smart Always</button>
+                                </a>
+                        </div>
+                        <img src = "{% static 'homeapp/images/final2.png'%}">  
+                </div>  
+        </div>
+</div>
+<!--Second container for main lines -->
+<div class="main-lines-container" id="main-lines-container">
+        <!--Third container for desktop display-->
+        <div id="desk-container">
+                <h5 class="main-lines">Perfumes</h5>
+                <div class="slide-containers" id="perfumes">
+                        <button  class="btn btn-lefts border border-warning"> <i class="fas fa-angle-left"></i></button>
+                        <section class ="section-container d-flex flex-row" id="image-slider-perfumes"></section>
+                        <button  class="btn btn-rights border border-warning"><i class="fas fa-angle-right"></i></button>
+                </div>
+                <h5 class="main-lines">Clothing</h5>
+                <div class="slide-containers" id="clothes">
+                        <button  class="btn btn-lefts border border-warning"><i class="fas fa-angle-left"></i></button>
+                        <section class="section-container d-flex flex-row" id="image-slider-clothes" ></section>
+                        <button  class="btn btn-rights border border-danger"><i class="fas fa-angle-right"></i></button>
+                </div>
+                <h5 class="main-lines">Shoes</h5>
+                <div class="slide-containers" id="shoes">
+                        <button  class="btn btn-lefts border border-warning"><i class="fas fa-angle-left"></i></button>
+                        <section class="section-container d-flex flex-row" id="image-slider-shoes"></section>
+                        <button  class="btn btn-rights border border-danger"><i class="fas fa-angle-right"></i></button>
+                </div>
+                <h5 class="main-lines">Hair</h5>
+                <div class="slide-containers" id="hair">
+                        <button  class="btn btn-lefts border border-warning"><i class="fas fa-angle-left"></i></button>
+                        <section class="section-container d-flex flex-row" id="image-slider-hair"></section>
+                        <button  class="btn btn-rights border btn-right border-danger"><i class="fas fa-angle-right"></i></button>
+                </div>
+        </div>
+        <!--Third container for mobile display-->
+<!--Third container Dubai burj khalifah -->
+<!--first container slides -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+    <ul class="carousel-indicators">
+        <li data-target="#slides" data-slide-to="0"class="active"></li>
+        <li data-target="#slides" data-slide-to="1"></li>
+        <li data-target="#slides" data-slide-to="2"></li>
+    </ul>
+    <div class="carousel-inner carousel-inner-footer">
+        <div class="carousel-item carousel-item-footer active">
+            <div class="carousel-caption carousel-caption-footer"><a href="#"><button type="button" class="btn btn-outline-light btn-lg">Smart Always</button></a></div>
+            <video autoplay loop muted><source src = "https://eddmoakconnectweb.s3.us-east-2.amazonaws.com/veromoda.mp4" type="video/mp4"></video> 
+        </div>
+        <div class="carousel-item carousel-item-footer">
+            <div class="carousel-caption carousel-caption-footer"><a href="#"><button type="button" class="btn btn-outline-light btn-lg">Smart Always</button></a></div>
+            <video autoplay loop muted><source src = "https://eddmoakconnectweb.s3.us-east-2.amazonaws.com/veromoda.mp4" type="video/mp4"></video>  
+        </div>
+        <div class="carousel-item carousel-item-footer">
+            <div class="carousel-caption carousel-caption-footer"><a href="/buy/samsung"><button type="button" class="btn btn-outline-light btn-lg">Smart Always</button></a></div>
+            <video autoplay loop muted><source src = "https://eddmoakconnectweb.s3.us-east-2.amazonaws.com/veromoda.mp4" type="video/mp4"></video>  
+        </div>  
+    </div>
+</div>
+<hr class="my-4">
+</div>
+{% endblock %}
+{% block script %}
+ <script src="{% static 'homeapp/showsections.js'%}"></script>
+{% endblock %}

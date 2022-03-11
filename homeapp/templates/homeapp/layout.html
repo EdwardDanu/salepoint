@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eddmoak</title>
+  <link href="{% static 'homeapp/styles.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+  <script src="{% static 'homeapp/layout.js'%}"></script>
+  {% block script %}
+  {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light" style="background-color: rgb(240, 237, 232) !important;">
+                <a class="navbar-brand" href="#">
+                        <img src = "{% static 'homeapp/images/eddmoak-lights.png' %}">
+                </a>
+                <button class="navbar-toggler" type="button" 
+                data-toggle="collapse" data-target="#navbarSupportedContent" 
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span><div id="menu-div">Menu</div>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                                <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="true">Perfumes</a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a  id="0"  class="customeroption dropdown-item" >Body Sprays</a>
+                                        <a  id="0"  class="customeroption dropdown-item" >Deodorants</a>
+                                        <a  id="0"      class="customeroption dropdown-item" >Oils</a>
+                                        <a  id="0"  class="customeroption dropdown-item">Roll ons</a>
+                                        </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="true">Clothing</a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <a  id="1"   class="customeroption dropdown-item" >Bottoms</a>
+                                                <a  id="1"   class="customeroption dropdown-item" >Dresses</a>
+                                                <a  id="1"   class="customeroption dropdown-item">Jumpsuits</a>
+                                        </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="true">Footwear</a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <a  id="2" class="customeroption dropdown-item" >Sneakers</a>
+                                                <a  id="2" class="customeroption dropdown-item" >Slops</a>
+                                                <a  id="2" class="customeroption dropdown-item" >Formal</a>
+                                        </div>
+                                </li>
+                                <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="true">Hair</a>
+                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                <a  id="3" class="customeroption dropdown-item" >Brazilian</a>
+                                                <a  id="3" class="customeroption dropdown-item" >Peruvian</a>
+                                                <a  id="3" class="customeroption dropdown-item" >Indian</a>
+                                        </div>
+                                </li>
+                                <a href= "#" class="nav-item notification"><span id="badges" class=" badge"></span>Cart</a>
+                        </ul>
+                        <span class="nav navbar-nav ml-auto d-flex socialnav">
+                                <a href="https://wa.me/971505218486"><i class="fab fa-whatsapp"></i></a>
+                                <a href="http://www.instagram.com/eddmoak"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.facebook.com/eddmoakpage"><i class="fab fa-facebook"></i></a>
+                                <a href="https://twitter.com/EddMoak"><i class="fab fa-twitter" ></i></a>
+                                <a href="https://studio.youtube.com/channel/UC0EoJ9jofNoXIQsLifhDsKw"><i class="fab fa-youtube"></i></a>
+                                <a href="mailto:sales@eddmoak.com"><i class="fab fa-google-plus-g"></i></a>
+                        </span>
+                </div>
+</nav>
+<span class="nav navbar-nav ml-auto mobilesocialnav">
+        <a href="https://wa.me/971505218486"><i class="fab fa-whatsapp"></i></a>
+        <a href="http://www.instagram.com/eddmoak"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/eddmoakpage"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com/EddMoak"><i class="fab fa-twitter" ></i></a>
+        <a href="https://studio.youtube.com/channel/UC0EoJ9jofNoXIQsLifhDsKw"><i class="fab fa-youtube"></i></a>
+        <a href="mailto:sales@eddmoak.com"><i class="fab fa-google-plus-g"></i></a>
+</span>
+{% block body %}
+{% endblock %}
+<footer>
+        <div class="container-fluid padding">
+                <div class="row text-center">
+                        <div class="col-md-4">
+                                <hr class="light">
+                                <a class="navbar-brand" href="/login">
+                                        <img src = "{% static 'homeapp/images/eddmoak-lights.png' %}">
+                                        <span class="navbrand"></span>
+                                </a>
+                                <hr class="light">
+                                <p>00263778914586</p>
+                                <p>sales@eddmoak.com</p>
+                                <p>Shop N0 7 1st Floor 31 julius Nyerere</p>
+                                <p>Harare, Harare, 00000</p>
+                        </div>
+                        <div class="col-md-4">
+                                <hr class="light">
+                                <h5>Our hours</h5>
+                                <hr class="light">
+                                <p>Monday- Friday : 9am - 6pm</p>
+                                <p>Sarturday : 9am - 4pm</p>
+                                <p>Sunday : Closed</p>
+                        </div>
+                        <div class="col-md-4">
+                                <hr class="light">
+                                <h5>Service Areas</h5>
+                                <hr class="light">
+                                <p>Dubai, 00971505218486</p>
+                                <p>Harare, 00263778914586</p>
+                                <p>Bulawayo, 00263773786617</p>
+                        </div>
+                        <div class="col-12">
+                                <hr class="light-100">
+                                <h5>&copy; quick.com</h5>
+                        </div>
+                </div>
+        </div>
+</footer>
+</body>
+</html>
