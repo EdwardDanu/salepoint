@@ -1,0 +1,8 @@
+Insufficient balance when USD are available but negative AED
+Able to record negative AED
+Not calculating variance if the value is the same
+Showing Balance on screen 
+Reloading After submitting
+Small variance between excel and app when sending USD from Zim and receiving AED, Mostly negative variance
+After sending AED, the client cant to more AED before the receive anything
+You cant  withdraw amount in USD more than the equivalent AED
