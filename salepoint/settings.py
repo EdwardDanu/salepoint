@@ -6,9 +6,12 @@ from decouple import config
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+
 #MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 #MEDIA_URL = "/media/"
 #STATIC_URL = '/static/'
