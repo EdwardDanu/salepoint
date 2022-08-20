@@ -25,7 +25,7 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 
 SECRET_KEY = 'django-insecure-us53cqds5spyrtp!)hx(mp4q1b#24y4u!b6+m^xq7obb0kwn_c'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'homeapp.User'
 
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
