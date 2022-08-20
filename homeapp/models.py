@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator
 class User(AbstractUser):
   pass
-class Perfumes(models.Model):
+class Gadgets(models.Model):
   brandsection = models.CharField(max_length=50)
   brand = models.CharField(max_length=50)
   trending = models.BooleanField(default=False)
@@ -19,9 +19,39 @@ class Perfumes(models.Model):
     return {
     "id": self.id, "brandsection": self.brandsection,"brand": self.brand, "price": self.price,"color": self.color,"description": self.description}
 
-class PerfumesImages(models.Model):
-  entry = models.ForeignKey(Perfumes, default=None, on_delete=models.CASCADE, related_name="perfumesphoto")
+class GadgetsImages(models.Model):
+  entry = models.ForeignKey(Gadgets, default=None, on_delete=models.CASCADE, related_name="perfumesphoto")
   images = models.ImageField(upload_to='Perfumes', verbose_name='Image')
+  def __str__(self): 
+      return f"{self.id, self.entry.brand}"
+
+  def serialize(self):
+    return {
+      "id": self.id,
+      "entry": {"entryid" : self.entry.id, "brandsection" : self.entry.brandsection, "brand" : self.entry.brand, "price" : self.entry.price, "color" : self.entry.color,"description" : self.entry.description},
+      "images": self.images.url
+    }
+
+#Accessories
+class Accessories(models.Model):
+  brandsection = models.CharField(max_length=50)
+  brand = models.CharField(max_length=50)
+  trending = models.BooleanField(default=False)
+  price = models.IntegerField()
+  color = models.CharField(max_length=64)
+  description = models.TextField(max_length=1000)
+
+  def __str__(self): 
+      return f"{self.id, self.brand}" 
+
+  def serialize(self):
+    return {
+    "id": self.id, "brandsection": self.brandsection,"brand": self.brand, "price": self.price,"color": self.color,"description": self.description}
+
+class AccessoriesImages(models.Model):
+  entry = models.ForeignKey(Accessories, default=None, on_delete=models.CASCADE, related_name="clothingphoto")
+  images = models.ImageField(upload_to='Clothing', verbose_name='Image')
+
   def __str__(self): 
       return f"{self.id, self.entry.brand}"
 
@@ -49,37 +79,7 @@ class Clothing(models.Model):
     "id": self.id, "brandsection": self.brandsection,"brand": self.brand, "price": self.price,"color": self.color,"description": self.description}
 
 class ClothingImages(models.Model):
-  entry = models.ForeignKey(Clothing, default=None, on_delete=models.CASCADE, related_name="clothingphoto")
-  images = models.ImageField(upload_to='Clothing', verbose_name='Image')
-
-  def __str__(self): 
-      return f"{self.id, self.entry.brand}"
-
-  def serialize(self):
-    return {
-      "id": self.id,
-      "entry": {"entryid" : self.entry.id, "brandsection" : self.entry.brandsection, "brand" : self.entry.brand, "price" : self.entry.price, "color" : self.entry.color,"description" : self.entry.description},
-      "images": self.images.url
-    }
-
-
-class Footwear(models.Model):
-  brandsection = models.CharField(max_length=50)
-  brand = models.CharField(max_length=50)
-  trending = models.BooleanField(default=False)
-  price = models.IntegerField()
-  color = models.CharField(max_length=64)
-  description = models.TextField(max_length=1000)
-
-  def __str__(self): 
-      return f"{self.id, self.brand}" 
-
-  def serialize(self):
-    return {
-    "id": self.id, "brandsection": self.brandsection,"brand": self.brand, "price": self.price,"color": self.color,"description": self.description}
-
-class FootwearImages(models.Model):
-  entry = models.ForeignKey(Footwear, default=None, on_delete=models.CASCADE, related_name="footwearphoto")
+  entry = models.ForeignKey(Clothing, default=None, on_delete=models.CASCADE, related_name="footwearphoto")
   images = models.ImageField(upload_to='Footwear', verbose_name='Image')
 
   def __str__(self): 
@@ -91,8 +91,8 @@ class FootwearImages(models.Model):
       "entry": {"entryid" : self.entry.id, "brandsection" : self.entry.brandsection, "brand" : self.entry.brand, "price" : self.entry.price, "color" : self.entry.color,"description" : self.entry.description},
       "images": self.images.url
     }
-
-class Hair(models.Model):
+#Cosmetics
+class Cosmetics(models.Model):
   brandsection = models.CharField(max_length=50)
   brand = models.CharField(max_length=50)
   trending = models.BooleanField(default=False)
@@ -107,8 +107,8 @@ class Hair(models.Model):
     return {
     "id": self.id, "brandsection": self.brandsection,"brand": self.brand, "price": self.price,"color": self.color,"description": self.description}
 
-class HairImages(models.Model):
-  entry = models.ForeignKey(Hair, default=None, on_delete=models.CASCADE, related_name="hairphoto")
+class CosmeticsImages(models.Model):
+  entry = models.ForeignKey(Cosmetics, default=None, on_delete=models.CASCADE, related_name="hairphoto")
   images = models.ImageField(upload_to='Hair', verbose_name='Image')
 
   def __str__(self): 

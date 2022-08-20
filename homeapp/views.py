@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import User, Perfumes, PerfumesImages, Clothing, ClothingImages, Footwear, FootwearImages, Hair, HairImages, Cart, Deposits, USDaccount, AEDaccount
+from .models import User, Gadgets, GadgetsImages, Accessories, AccessoriesImages, Clothing, ClothingImages, Cosmetics, CosmeticsImages, Cart, Deposits, USDaccount, AEDaccount
 from .forms import loginuser, ZimDepositsForm
 from django.core.mail import send_mail
 from datetime import date
@@ -61,12 +61,9 @@ def login_view(request):
         return render(request, "homeapp/login.html", {
         "form":loginuser })
 
-
 def logout_view(request):
   logout(request)
   return HttpResponseRedirect(reverse("index"))
-
-
 
 def newentry(request):
   if request.method == "POST":
@@ -78,11 +75,17 @@ def newentry(request):
     description = request.POST["description"]
     formset = request.FILES.getlist('images')
     print(brandsection)
-    if brandsection == "perfumes":
-      entry = Perfumes(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
+    if brandsection == "gadgets":
+      entry = Gadgets(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
       entry.save()
       for image in formset:
-          image = PerfumesImages(entry=entry, images=image)
+          image = GadgetsImages(entry=entry, images=image)
+          image.save()
+    elif brandsection == "accessories":
+      entry = Accessories(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
+      entry.save()
+      for image in formset:
+          image = AccessoriesImages(entry=entry, images=image)
           image.save()
     elif brandsection == "clothing":
       entry = Clothing(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
@@ -90,17 +93,11 @@ def newentry(request):
       for image in formset:
           image = ClothingImages(entry=entry, images=image)
           image.save()
-    elif brandsection == "footwear":
-      entry = Footwear(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
-      entry.save()
-      for image in formset:
-          image = FootwearImages(entry=entry, images=image)
-          image.save()
     else:
-      entry = Hair(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
+      entry = Cosmetics(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
       entry.save()
       for image in formset:
-          image = HairImages(entry=entry, images=image)
+          image = CosmeticsImages(entry=entry, images=image)
           image.save()
     return HttpResponseRedirect(reverse("index"))
   else:
@@ -114,6 +111,7 @@ def index(request):
     return render(request, "homeapp/index.html")
 
 @csrf_exempt
+#Gadgets, GadgetsImages, Accessories, AccessoriesImages, Clothing, ClothingImages, Cosmetics, CosmeticsImages
 def loadindex(request):
   if request.method == "POST":
         if request.user.is_authenticated:
@@ -127,13 +125,13 @@ def loadindex(request):
                 counter = 1
                 for order in Cart.objects.filter(user=request.user.username):
                       if order.modelindex == 0:
-                          message = ''.join([str(counter) , ". ", Perfumes.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
+                          message = ''.join([str(counter) , ". ", Gadgets.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
                       if order.modelindex == 1:
-                          message = ''.join([str(counter) , ". ", Clothing.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
+                          message = ''.join([str(counter) , ". ", Accessories.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
                       if order.modelindex == 2:
-                          message = ''.join([str(counter), " .", Footwear.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
+                          message = ''.join([str(counter), " .", Clothing.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
                       if order.modelindex == 4:
-                          message = ''.join([str(counter) , ". ", Hair.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
+                          message = ''.join([str(counter) , ". ", Cosmetics.objects.get(id= order.entrysid).brand," ", str(order.quantity), " unit/s"])
                       order.delete()
                       counter = counter + 1
                 emailbody = emailbody + message + "\n"
@@ -159,25 +157,25 @@ def loadindex(request):
        email = request.user.email
     except:
        email = "emai"
-    for perfume in Perfumes.objects.all():
+    for perfume in Gadgets.objects.all():
       sameperfume = []
       for item in perfume.perfumesphoto.all():
           sameperfume.append(item.serialize())
       allperfumes.append(sameperfume)
     allclothing = []
-    for clothes in Clothing.objects.all():
+    for clothes in Accessories.objects.all():
       sameclothes = []
       for item in clothes.clothingphoto.all():
           sameclothes.append(item.serialize())
       allclothing.append(sameclothes)
     allfootwear = []
-    for footwear in Footwear.objects.all():
+    for footwear in Clothing.objects.all():
       samefootwear = []
       for item in footwear.footwearphoto.all():
           samefootwear.append(item.serialize())
       allfootwear.append(samefootwear)
     allhair = []
-    for hair in Hair.objects.all():
+    for hair in Cosmetics.objects.all():
       samehair = []
       for item in hair.hairphoto.all():
           samehair.append(item.serialize())

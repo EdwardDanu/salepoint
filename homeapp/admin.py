@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import Perfumes, PerfumesImages, Clothing, ClothingImages, Footwear, FootwearImages, Hair, HairImages, Cart,Deposits ,USDaccount,AEDaccount
+from .models import User, Gadgets, GadgetsImages, Accessories, AccessoriesImages, Clothing, ClothingImages, Cosmetics, CosmeticsImages, Cart, Deposits, USDaccount, AEDaccount
 
 # Register your models here.
-admin.site.register(Perfumes)
-admin.site.register(PerfumesImages)
+admin.site.register(Gadgets)
+admin.site.register(GadgetsImages)
+admin.site.register(Accessories)
+admin.site.register(AccessoriesImages)
 admin.site.register(Clothing)
 admin.site.register(ClothingImages)
-admin.site.register(Footwear)
-admin.site.register(FootwearImages)
-admin.site.register(Hair)
-admin.site.register(HairImages)
+admin.site.register(Cosmetics)
+admin.site.register(CosmeticsImages)
 admin.site.register(Cart)
 admin.site.register(Deposits)
 admin.site.register(USDaccount)
