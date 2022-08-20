@@ -6,11 +6,8 @@ from decouple import config
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
 
+#STATIC_URL = '/static/'
 #MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 #MEDIA_URL = "/media/"
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -23,13 +20,13 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' # This make the
 AWS_ACCESS_KEY_ID ='AKIAVMEBOKZ275XRGEV5 '
 AWS_SECRET_ACCESS_KEY = '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'
 AWS_STORAGE_BUCKET_NAME = 'eddmoakconnectweb'
-
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-SECRET_KEY = 'django-insecure-us53cqds5spyrtp!)hx(mp4q1b#24y4u!b6+m^xq7obb0kwn_c'
-DEBUG = True
-ALLOWED_HOSTS = []
 
+
+SECRET_KEY = 'django-insecure-us53cqds5spyrtp!)hx(mp4q1b#24y4u!b6+m^xq7obb0kwn_c'
+DEBUG = False
+ALLOWED_HOSTS = []
 AUTH_USER_MODEL = 'homeapp.User'
 
 INSTALLED_APPS = [
@@ -57,7 +54,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': False,
+        'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -115,6 +112,10 @@ USE_TZ = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
