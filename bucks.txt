@@ -6,3 +6,13 @@ Reloading After submitting
 Small variance between excel and app when sending USD from Zim and receiving AED, Mostly negative variance
 After sending AED, the client cant to more AED before the receive anything
 You cant  withdraw amount in USD more than the equivalent AED
+
+
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, 'static'),
+#]
+
+#STATIC_URL = '/static/'
+#MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+#MEDIA_URL = "/media/"
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
