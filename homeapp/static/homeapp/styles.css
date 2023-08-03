@@ -365,6 +365,7 @@ hr.light-100 {
   margin-left: 1%;
   padding: 10px;
   margin-bottom: 5px;
+  margin-top: 20px;
 }
 .reg_form {
   width: 100%;
@@ -372,6 +373,7 @@ hr.light-100 {
 }
 .register {
   justify-content: center;
+  margin-bottom: 10px;
 }
 .imageform{
   border: 2px solid rgb(146, 25, 25);
@@ -394,8 +396,6 @@ hr.light-100 {
     background-color: rgb(204, 233, 204);
     width: 100%;
   }
- 
-
 
   /* Styling for register form*/
 .register {
@@ -608,11 +608,11 @@ hr.light-100 {
   margin-top: 0;
 }
 .textforma {
-  width: 50%;
+  width: 46%;
   padding:7px;
   border: 7px;
   border-radius: 5px;
-  margin-top: 15px;
+  margin:1%;
   }
 .textformb{
   width: 100%;

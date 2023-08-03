@@ -9,4 +9,6 @@ urlpatterns = [
       path('home/loadindex', views.loadindex, name='loadindex'),
       path('newentry', views.newentry, name='newentry'),
       path('moneywave/<str:name>', views.moneywave, name='moneywave'),
+      path('newbudgetitem/<str:name>', views.newbudgetitem, name='newbudgetitem'),
+      path('budget/<str:name>', views.budget_entry, name='budget_entry'),
   ]

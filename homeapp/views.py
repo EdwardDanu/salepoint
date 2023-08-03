@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import User, Gadgets, GadgetsImages, Accessories, AccessoriesImages, Clothing, ClothingImages, Cosmetics, CosmeticsImages, Cart, Deposits, USDaccount, AEDaccount
+from .models import User, Gadgets, GadgetsImages, Accessories, AccessoriesImages, Clothing, ClothingImages, Cosmetics, CosmeticsImages, Cart, Deposits, USDaccount, AEDaccount, IncomeAcc, ExpenseAcc, Incomeentries,Expenseentries
 from .forms import loginuser, ZimDepositsForm
 from django.core.mail import send_mail
 from datetime import date
@@ -74,7 +74,6 @@ def newentry(request):
     color = request.POST["color"]
     description = request.POST["description"]
     formset = request.FILES.getlist('images')
-    print(brandsection)
     if brandsection == "gadgets":
       entry = Gadgets(brandsection=brandsection, brand=brand, trending=trending, price=price, color=color, description=description)
       entry.save()
@@ -184,6 +183,8 @@ def loadindex(request):
     [sectionitem.serialize() for sectionitem in Cart.objects.filter(user=request.user.username)]],
       safe=False)
 
+
+#Moneywave code for AED and USD transactions
 @login_required(login_url='login')
 def moneywave(request, name):
     if request.method == "POST":
@@ -199,7 +200,9 @@ def moneywave(request, name):
         if form.is_valid():
             instance = form.save(commit=False)
             if name == "newentry":
-                if instance.samount == None:
+                if instance.samount == None and instance.ramount == None:
+                   return HttpResponse("This is not a valid transaction")
+                elif instance.ramount != None and instance.samount == None:
                     if instance.scurrency == 'USD':
                         balance = aedbalance - instance.ramount
                         if balance < 1:
@@ -207,29 +210,25 @@ def moneywave(request, name):
                         dollars = AEDaccount(reference = instance.reference, amount = instance.ramount, balance = balance)
                         dollars.save()
                     else:
-                        usdbalance - instance.ramount
+                        balance = usdbalance - instance.ramount
                         if balance < 1:
                           return HttpResponse("There is no balance to fund this transaction")
                         dollars = USDaccount(reference = instance.reference, amount = instance.ramount, balance = balance)
                         dollars.save()
-                elif instance.ramount == None:
+                elif instance.samount != None and instance.ramount == None:
                     if instance.scurrency == 'USD':
                         balance = usdbalance + instance.samount
-                        if balance < 1:
-                          return HttpResponse("There is no balance to fund this transaction")
                         dollars = USDaccount(reference = instance.reference, amount = instance.samount, balance = balance)
                         dollars.save()
                     else:
                         balance = aedbalance + instance.samount
-                        if balance < 1:
-                          return HttpResponse("There is no balance to fund this transaction")
                         dollars = AEDaccount(reference = instance.reference, amount = instance.samount, balance = balance)
                         dollars.save()
                 else:
                     if instance.scurrency == 'USD':
                         balanceus    = usdbalance + instance.samount
                         aedbalanceae = aedbalance - instance.ramount
-                        if balanceus < 1 or aedbalanceae < 1:
+                        if aedbalanceae < 1:
                           return HttpResponse("There is no balance to fund this transaction")
                         dollars = USDaccount(reference = instance.reference, amount = instance.samount, balance = balanceus)
                         dirhams = AEDaccount(reference = instance.reference, amount = instance.ramount, balance = aedbalanceae)
@@ -238,61 +237,59 @@ def moneywave(request, name):
                     else:
                         aedbalanceae = aedbalance + instance.samount
                         balanceus = usdbalance - instance.ramount
-                        if balanceus < 1 or aedbalanceae < 1:
+                        if balanceus < 1:
                           return HttpResponse("There is no balance to fund this transaction")
                         dirhams = AEDaccount(reference = instance.reference, amount = instance.samount, balance = aedbalanceae)
                         dollars = USDaccount(reference = instance.reference, amount = instance.ramount, balance = balanceus)
                         dollars.save()
                         dirhams.save()
                 instance.save()
-                return render(request, "homeapp/moneywave.html",{'forms': ZimDepositsForm(), 'name' : 'zim'})
+                return redirect('/moneywave/newentry')
+                #return render(request, "homeapp/moneywave.html",{'forms': ZimDepositsForm(), 'name' : 'newentry'})
             else:
                 entry = Deposits.objects.get(reference = name)
                 oldsamount = entry.samount
+                if oldsamount == None:
+                    oldsamount = 0.00
                 oldramount = entry.ramount
+                if oldramount == None:
+                    oldramount = 0.00
                 oldvcurrency = entry.vcurrency
                 if entry.scurrency == "AED":
                     if oldvcurrency == "AED":
                         entry.samount  = oldsamount + instance.samount
                         entry.vamount = instance.vamount
+                        if aedbalance + instance.samount < 0:
+                          return HttpResponse("There is no balance to fund this transaction")
                         dirham = AEDaccount(reference = instance.reference, amount = instance.samount, balance = aedbalance + instance.samount)
                         dirham.save()
                     elif oldvcurrency == "USD":
                         entry.ramount  = oldramount + instance.ramount
                         entry.vamount = instance.vamount
+                        if usdbalance - instance.ramount < 0:
+                          return HttpResponse("There is no balance to fund this transaction")
                         dollar = USDaccount(reference = instance.reference, amount = instance.ramount, balance = usdbalance - instance.ramount)
                         dollar.save()
                 elif entry.scurrency == "USD":
                     if oldvcurrency == "AED":
                         entry.ramount  = oldramount + instance.ramount
                         entry.vamount = instance.vamount
+                        if aedbalance - instance.ramount < 0:
+                          return HttpResponse("There is no balance to fund this transaction")
                         dirham = AEDaccount(reference = instance.reference, amount = instance.ramount, balance = aedbalance - instance.ramount)
                         dirham.save()
                     elif oldvcurrency == "USD":
                         entry.samount  = oldsamount + instance.samount
                         entry.vamount = instance.vamount
+                        if usdbalance + instance.ramount < 0:
+                          return HttpResponse("There is no balance to fund this transaction")
                         dollar = USDaccount(reference = instance.reference, amount = instance.samount, balance = usdbalance + instance.samount)
                         dollar.save()
                 entry.save()
-                pending = []
-                for list in Deposits.objects.all():
-                    if list.vamount != 0:
-                        pending.append(list)
-                if Deposits.objects.all().last() == None:
-                  lastreference = 1000
-                else: 
-                  lastreference = Deposits.objects.all().last().reference[-4:].upper()
-                reference = f"DEP{today.strftime('%y%m%d')}{int(lastreference) + 1}" 
-                return render(request, "homeapp/moneywave.html",{
-                'forms'     : ZimDepositsForm(),
-                'name'      : name,
-                'reference' : reference,
-                'pending'   : pending
-                  })
+                return redirect('/moneywave/newentry')
         else:
             print(form.errors)
             return HttpResponseRedirect(reverse("index"))
-
     else:
       pending = []
       for list in Deposits.objects.all():
@@ -331,6 +328,69 @@ def moneywave(request, name):
             })
         except:
           return HttpResponse("There reference numner could not be found")
-      
-
-          
+    
+def newbudgetitem(request, name):
+  if request.method == "POST":
+    item = request.POST["budgetitem"]
+    if name == "income":
+       entry = IncomeAcc(incomeitem=item)
+    elif name == "expense":
+       entry = ExpenseAcc(expenseitem=item)
+    entry.save()
+    incomelists = []
+    expenselist = []
+    for list in IncomeAcc.objects.all():
+        incomelists.append(list)
+    for list in ExpenseAcc.objects.all():
+        expenselist.append(list)
+    return render(request, "homeapp/budget.html",{
+           'name': 'budgetmainpage',
+           'incomelists' : incomelists,
+           'expenselist' : expenselist
+           })
+  else:
+     if name == "income":
+        return render(request, "homeapp/budget.html",{'name': 'addincomeitem'})
+     else:
+        return render(request, "homeapp/budget.html",{'name': 'addexpenseitem'})
+    
+@login_required(login_url='login')       
+def budget_entry(request, name):
+    if request.method == "POST":
+       today = date.today()
+       if name == 'income':
+          incomename = request.POST["incomename"]
+          incomeorigin = request.POST["incomeorigin"]
+          incometype = request.POST["incometype"]
+          incomeamount = request.POST["incomeamount"]
+          print('See what i would love to show you written below as it is')
+          print(incomename)
+          print(incomeorigin)
+          print(incometype)           
+          print(incomeamount)
+          print('See what i would love to show you written below as it is')
+          for list in IncomeAcc.objects.filter(incomeitem = incomename):
+            print(list.incomeitem)
+            entry = Incomeentries(incomename=list, date=today, incomeorigin=incomeorigin, incometype=incometype, incomeamount=incomeamount)
+            entry.save()
+       elif name == 'expense':
+          expensename = request.POST["expensename"]
+          expenseplace = request.POST["expenseplace"]
+          expensetype = request.POST["expensetype"]
+          expenseamount = request.POST["expenseamount"]
+          expensename = ExpenseAcc.objects.get(expenseitem=f"{expensename}")
+          entry = Incomeentries(expensename=expensename, date=today, expenseplace=expenseplace, expensetype=expensetype, expenseamount=expenseamount)
+          entry.save()
+       return render(request, "homeapp/budget.html")
+    else:
+        incomelists = []
+        expenselist = []
+        for list in IncomeAcc.objects.all():
+            incomelists.append(list)
+        for list in ExpenseAcc.objects.all():
+            expenselist.append(list)
+        return render(request, "homeapp/budget.html",{
+           'name': 'budgetmainpage',
+           'incomelists' : incomelists,
+           'expenselist' : expenselist
+           })

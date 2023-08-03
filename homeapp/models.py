@@ -135,6 +135,7 @@ class Cart(models.Model):
     return {
     "id": self.id, "entryindex": self.entryindex, "modelindex": self.modelindex, "quantity":self.quantity}
 
+# Moneywave models
 class Deposits(models.Model):
   space = models.CharField(max_length=50, blank=True)
   reference = models.CharField(max_length=50)
@@ -170,10 +171,44 @@ class AEDaccount(models.Model):
   def __str__(self): 
     return f"{self.balance}"
 
+class IncomeAcc(models.Model):
+  incomeitem = models.CharField(max_length=10)
+  def __str__(self): 
+    return f"{self.incomeitem}"
+  def serialize(self):
+    return {
+    "id": self.id, "incomeitem": self.incomeitem}
+  
+class Incomeentries(models.Model):
+  incomename = models.ForeignKey(IncomeAcc, default=None, on_delete=models.CASCADE, related_name="incomeentred")
+  date  = models.DateField()
+  incomeorigin = models.CharField(max_length=10)
+  incometype = models.CharField(max_length=10)
+  incomeamount = models.FloatField(blank=True, null=True)
 
+  def __str__(self): 
+      return f"{self.id, self.incomename.incomeitem}"
+  def serialize(self):
+    return {
+    "id": self.id, "incomename": self.incomename, "date": self.date, "incomeorigin":self.incomeorigin, 'incometype': self.incometype,'incomeamount': self.incomeamount}
+  
+class ExpenseAcc(models.Model):
+  expenseitem = models.CharField(max_length=10)
+  def __str__(self): 
+    return f"{self.expenseitem}"
+  def serialize(self):
+    return {
+    "id": self.id, "expenseitem": self.expenseitem}
 
+class Expenseentries(models.Model):
+  expensename = models.ForeignKey(ExpenseAcc, default=None, on_delete=models.CASCADE, related_name="expenseentred")
+  date  = models.DateField()
+  expenseplace = models.CharField(max_length=10)
+  expensetype = models.CharField(max_length=10)
+  expenseamount = models.FloatField(blank=True, null=True)
 
-
-
-
-
+def __str__(self): 
+      return f"{self.id, self.expensename.incomeitem}"
+def serialize(self):
+    return {
+    "id": self.id, "expensename": self.expensename, "date": self.date, "expenseplace":self.expenseplace, 'expensetype': self.expensetype,'expenseamount': self.expenseamount}

@@ -1,0 +1,70 @@
+{% extends "homeapp/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container-fluid border"><div class="row"><h6 class="advance">Budget<h6></div></div>
+<h6 id="budgetname" hidden>{{name}}</h6>
+
+<div class="container-fluid" id="addincomeitem" hidden><div class="row register"><div class="col-md-8 col-xs-12">
+                <form class="reg_form" action="{% url 'newbudgetitem' 'income' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="brandsection">Add a new Budget item</label>
+                    <input class="form-control" type="text" name="budgetitem" placeholder="New Budget Income Item">
+                    <input class="submitform" type="submit" value="Submit"></div>
+                </form>
+</div></div></div>
+
+<div class="container-fluid" id="addexpenseitem" hidden><div class="row register"><div class="col-md-8 col-xs-12">
+    <form class="reg_form" action="{% url 'newbudgetitem' 'expense' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="brandsection">Add a new Budget item</label>
+        <input class="form-control" type="text" name="budgetitem" placeholder="New Budget Expense Item">
+        <input class="submitform" type="submit" value="Submit"></div>
+    </form>
+</div></div></div>
+
+
+<div class="container-fluid" id="updateincomeitem" hidden><div class="row register"><div class="col-md-8 col-xs-12">
+                <form class="reg_form" action="{% url 'budget_entry' 'income' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="incomename">Update An income item</label>
+                    <input class="form-control  textformb "type="text" name="incomename" id="incomename" value="check">
+                    <input class="form-control  textformb" type="text" name="incomeorigin" placeholder="Origin of Income" >
+                    <input class="form-control  textformb" type="text" name="incometype" placeholder="Type of income" >
+                    <input class="form-control  textformb" type="text" name="incomeamount" placeholder="Amount of Income" >
+                    <input class="submitform" type="submit" value="Submit"></div>
+                </form>
+</div></div></div>
+
+<div class="container-fluid" id="updateexpenseitem" hidden><div class="row register"><div class="col-md-8 col-xs-12">
+                <form class="reg_form" action="{% url 'budget_entry' 'expense' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label for="brandsection">Update an expense item</label>
+                    <input id="expensename" class="form-control  textformb "type="text" name="expensename" value="check" >
+                    <input class="form-control  textformb" type="text" name="expenseplace" placeholder="Place of Expense" >
+                    <input class="form-control  textformb" type="text" name="expensetype" placeholder="Type of Expense" >
+                    <input class="form-control  textformb" type="text" name="expenseamount" placeholder="Amount spent" >
+                    <input class="submitform" type="submit" value="Submit">
+                </form>
+</div></div></div>
+
+<div class="container-fluid" id="budgetmainpage" hidden><div class="row register">
+        <div class="col-md-8 col-xs-12">
+                <h6 class="advance">Income</h6>
+                {% for list in incomelists %}
+                <a class="btn btn-outline-primary textforma  income expeincome">{{list}}       </a>
+                {% endfor %} 
+                <a href="{% url 'newbudgetitem' 'income' %}" class="btn btn-outline-primary textforma">           Add An Income</a>
+        </div>    
+        <div class="col-md-8 col-xs-12">
+                <h6 class="advance">Expense</h6>
+                {% for list in expenselist %}
+                <a class="btn btn-outline-primary textforma expense expeincome">{{list}}          </a>       
+                {% endfor %} 
+                <a href="{% url 'newbudgetitem' 'expense' %}" class="btn btn-outline-primary textforma ">          Add An Expense</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="{% static 'homeapp/budget.js' %}"></script>
+{% endblock %}
